@@ -79,15 +79,7 @@ public abstract class Game extends Canvas {
       float tick = (float)(now - last) / 1000;
       last = now;
       
-      for(int i = 0; i < entities.size(); i++) {
-        entities.get(i).update(tick, this);
-      }
-      
-       collisionManager.update(tick);
-      
-      for(int i = 0; i < entities.size(); i++) {
-        entities.get(i).applyNext();
-      }
+      update(tick);
       
       g = (Graphics2D)strategy.getDrawGraphics();
       g = (Graphics2D) g.create();
@@ -99,10 +91,10 @@ public abstract class Game extends Canvas {
       camera.look(g);
       
       // render
-      if(bgTile != null) bgTile.render(round(camera.x-(getWidth() / 2)), 
-                                       round(camera.y-(getHeight() / 2)), 
-                                       round(camera.x+(getWidth() / 2)), 
-                                       round(camera.y+(getHeight() / 2)), g);
+      if(bgTile != null) bgTile.render(round(camera.x-((getWidth() / 2) * (1 / camera.zoom))), 
+                                       round(camera.y-((getHeight() / 2) * (1 / camera.zoom))),
+                                       round(camera.x+((getWidth() / 2) * (1 / camera.zoom))),
+                                       round(camera.y+((getHeight() / 2) * (1 / camera.zoom))), g);
       
       render(g);
       
@@ -126,8 +118,19 @@ public abstract class Game extends Canvas {
     }
   }
   public abstract void init();
+  public void update(float tick) {
+    for(int i = 0; i < entities.size(); i++) {
+      entities.get(i).update(tick, this);
+    }
+    
+     collisionManager.update(tick);
+    
+    for(int i = 0; i < entities.size(); i++) {
+      entities.get(i).applyNext();
+    }
+  }
   
-  private Clip playSound(String soundLoc, boolean loop) {
+  public Clip playSound(String soundLoc, boolean loop) {
     try {
       Clip clip = AudioSystem.getClip();
       // read audio data from whatever source (file/classloader/etc.)

@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
@@ -17,7 +18,7 @@ import com.heychinaski.engie.camera.Camera;
 import com.heychinaski.engie.camera.EntityTrackingCamera;
 import com.heychinaski.engie.camera.SimpleCamera;
 
-public class Main {
+public class TestMain {
 
   /**
    * @param args
@@ -37,6 +38,12 @@ public class Main {
       public void init() {
         testEntity = new TestEntity();
         entities.add(testEntity);
+      }
+      
+      public void update(float tick) {
+        if(input.isKeyDown(KeyEvent.VK_Z)) camera.zoom += tick;
+        if(input.isKeyDown(KeyEvent.VK_X)) camera.zoom -= tick;
+        super.update(tick);
       }
 
       @Override
