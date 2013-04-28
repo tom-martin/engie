@@ -20,4 +20,8 @@ public abstract class Camera extends Entity {
     g.translate((game.getWidth() / (2 * zoom))-x, (game.getHeight() / (2 * zoom))-y);
   }
   
+  public float worldXToScreenX(float x) {
+    return (x - (this.x - (game.getWidth() / (2 * zoom)))) * zoom;
+  }
+  
 }

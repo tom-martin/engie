@@ -21,7 +21,7 @@ public class TestEntity extends Entity {
   }
 
   @Override
-  public void render(Graphics2D g) {
+  public void render(Graphics2D g, Game game) {
     g.setColor(Color.green);
     
     g.fillRect(round(x - 20), round(y + 20), 20, 20);

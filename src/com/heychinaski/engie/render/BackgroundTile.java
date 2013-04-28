@@ -25,4 +25,14 @@ public class BackgroundTile {
       }
     }
   }
+  
+  public void render(int x, int y, int endX, Graphics2D g) {
+    int normX = ((x / size) * size) - size;
+    
+    int normEndX = ((endX / size) * size) + size;
+    
+    for(int cx = normX - size;cx < normEndX;cx+=size) { 
+      g.drawImage(image, cx, y, null);
+    }
+  }
 }

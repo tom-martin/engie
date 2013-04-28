@@ -18,7 +18,7 @@ public class SimpleCamera extends Camera {
   }
 
   @Override
-  public void render(Graphics2D g) {
+  public void render(Graphics2D g, Game game) {
     
   }
 

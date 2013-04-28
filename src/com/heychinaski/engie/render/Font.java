@@ -12,13 +12,16 @@ public class Font {
   String row2 = "MNOPQRSTUVWX";
   String row3 = "YZ.,!'";
 
-  public Font(Image image) {
+  private Color color;
+
+  public Font(Image image, Color color) {
     super();
     this.image = image;
+    this.color = color;
   }
   
   public void renderString(Graphics g, String s, int x, int y) {
-    g.setColor(Color.white);
+    g.setColor(color);
     for(int i = 0; i < s.length(); i++) {
       char c = s.charAt(i);
       int xIndex = -1;

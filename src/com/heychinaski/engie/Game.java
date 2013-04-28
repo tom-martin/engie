@@ -30,7 +30,7 @@ public abstract class Game extends Canvas {
   
   boolean running = true;
   
-  protected ImageManager imageManager;
+  public ImageManager imageManager;
   protected Camera camera;
   protected BackgroundTile bgTile;
   
@@ -59,10 +59,10 @@ public abstract class Game extends Canvas {
   
   public void start() {
     entities = new ArrayList<Entity>();
+    imageManager = new ImageManager(this, images());
     init();
-    imageManager = new ImageManager(this, new String[] {});
     camera = camera();
-    entities.add(camera);
+    if(camera != null) entities.add(camera);
     collisionManager = new CollisionManager(this);
     
     Image bgTileImage = bgTileImage();
@@ -88,7 +88,7 @@ public abstract class Game extends Canvas {
       g.setColor(Color.black);
       g.fillRect(0, 0, getWidth(), getHeight());
       
-      camera.look(g);
+      if(camera != null) camera.look(g);
       
       // render
       if(bgTile != null) bgTile.render(round(camera.x-((getWidth() / 2) * (1 / camera.zoom))), 
@@ -114,7 +114,7 @@ public abstract class Game extends Canvas {
   public abstract Image bgTileImage();
   public void render(Graphics2D g) {
     for(int i = 0; i < entities.size(); i++) {
-      entities.get(i).render(g);
+      entities.get(i).render(g, this);
     }
   }
   public abstract void init();

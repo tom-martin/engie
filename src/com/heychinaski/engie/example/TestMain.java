@@ -60,11 +60,15 @@ public class TestMain {
 
       @Override
       public Image bgTileImage() {
-        Image image = new BufferedImage(20, 20, BufferedImage.TYPE_4BYTE_ABGR);
+        Image image = new BufferedImage(100, 100, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics g = image.getGraphics();
+        
+        g.setColor(Color.pink);
+        g.fillRect(0, 0, 100, 100);
+        
         g.setColor(Color.red);
-        g.fillRect(0, 0, 10, 10);
-        g.fillRect(10, 10, 10, 10);
+        g.fillRect(0, 0, 50, 50);
+        g.fillRect(50, 50, 50, 50);
         g.dispose();
         return image;
       }
