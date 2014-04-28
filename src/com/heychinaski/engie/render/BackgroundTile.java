@@ -7,9 +7,9 @@ public class BackgroundTile {
   Image image;
   private int size;
 
-  public BackgroundTile(Image image) {
+  public BackgroundTile(Image image, int scale) {
     this.image = image; 
-    size = image.getWidth(null);
+    size = image.getWidth(null)*scale;
   }
   
   public void render(int x, int y, int endX, int endY, Graphics2D g) {
@@ -21,7 +21,7 @@ public class BackgroundTile {
     
     for(int cy = normY - size;cy < normEndY;cy+=size) {
       for(int cx = normX - size;cx < normEndX;cx+=size) { 
-        g.drawImage(image, cx, cy, null);
+        g.drawImage(image, cx, cy, size, size, null);
       }
     }
   }

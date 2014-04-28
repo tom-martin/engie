@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 import com.heychinaski.engie.Game;
 import com.heychinaski.engie.camera.Camera;
 import com.heychinaski.engie.camera.EntityTrackingCamera;
-import com.heychinaski.engie.camera.SimpleCamera;
 
 public class TestMain {
 
@@ -72,6 +71,12 @@ public class TestMain {
         g.dispose();
         return image;
       }
+
+	@Override
+	public void renderHud(Graphics2D g) {
+		// TODO Auto-generated method stub
+		
+	}
       
     };
     panel.add(game);

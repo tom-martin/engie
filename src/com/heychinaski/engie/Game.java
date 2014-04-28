@@ -36,7 +36,7 @@ public abstract class Game extends Canvas {
   
   public List<Entity> entities;
 
-  private CollisionManager collisionManager;
+  protected CollisionManager collisionManager;
   public Input input = new Input();
 
   public Game() {
@@ -60,13 +60,13 @@ public abstract class Game extends Canvas {
   public void start() {
     entities = new ArrayList<Entity>();
     imageManager = new ImageManager(this, images());
+    collisionManager = new CollisionManager(this);
     init();
     camera = camera();
     if(camera != null) entities.add(camera);
-    collisionManager = new CollisionManager(this);
     
     Image bgTileImage = bgTileImage();
-     if(bgTileImage != null) bgTile = new BackgroundTile(bgTileImage);
+     if(bgTileImage != null) bgTile = new BackgroundTile(bgTileImage, bgTileScale());
     
     createBufferStrategy(2);
     BufferStrategy strategy = getBufferStrategy();
@@ -98,6 +98,9 @@ public abstract class Game extends Canvas {
       
       render(g);
       
+      camera.unlook(g);
+      renderHud(g);
+      
       g.dispose();
       strategy.show();
       
@@ -109,12 +112,19 @@ public abstract class Game extends Canvas {
     }
   }
   
+  public abstract void renderHud(Graphics2D g);
+
   public abstract String[] images();
   public abstract Camera camera();
   public abstract Image bgTileImage();
+  public int bgTileScale() {
+	  return 1;
+  }
   public void render(Graphics2D g) {
     for(int i = 0; i < entities.size(); i++) {
-      entities.get(i).render(g, this);
+      Graphics2D gc = (Graphics2D) g.create();
+      entities.get(i).render(gc, this);
+      gc.dispose();
     }
   }
   public abstract void init();
@@ -123,7 +133,7 @@ public abstract class Game extends Canvas {
       entities.get(i).update(tick, this);
     }
     
-     collisionManager.update(tick);
+     if(collisionManager != null) collisionManager.update(tick);
     
     for(int i = 0; i < entities.size(); i++) {
       entities.get(i).applyNext();
